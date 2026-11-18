@@ -1,4 +1,7 @@
-# TDLPP + SPPR
+# Semantic-purified tensor discriminant manifold learning for hyperspectral image classification
+
+![Framework of TDLPP](docs/figures/C1.png)
+![Framework of TDLPP](docs/figures/C2.png)
 
 Minimal MATLAB implementation of **Semantic-purified tensor discriminant manifold learning for hyperspectral image classification** (T. Zhang, L. Zeng, F. Wang, *Pattern Recognition* 184 (2027) 115271).
 
