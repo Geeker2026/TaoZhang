@@ -1,0 +1,10 @@
+data/*
+!data/README.md
+!data/splits/
+!data/splits/*.mat
+results/
+*.asv
+*.obj
+*.o
+mex_ers.mex*
+!third_party/ers/mex_ers.mexw64
