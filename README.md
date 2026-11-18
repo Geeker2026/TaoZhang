@@ -3,9 +3,9 @@
 ![Framework of TDLPP](docs/figures/C1.jpg)This is my first TOP journal paper in Q1 during my PhD study. There may inevitably be some imperfections. I welcome discussions and any constructive comments.
 
 <p align="center">
-<img src="docs/figures/C1.jpg" alt="Framework of TDLPP" width="550">
+<img src="docs/figures/C1.jpg" alt="Framework of TDLPP" width="100">
 <br>
-<em>Framework of TDLPP</em>
+<em></em>
 </p>
 
 
