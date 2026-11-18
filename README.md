@@ -10,7 +10,7 @@ This is my first TOP journal paper in Q1 during my PhD study. There may inevitab
 Contact: 1281538933@qq.com
 </td>
 <td width="180" valign="middle">
-<img src="docs/figures/C2" alt="right" width="160">
+<img src="docs/figures/C2.jpg" alt="right" width="160">
 </td>
 </tr>
 </table>
