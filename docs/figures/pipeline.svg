@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 280" width="1000" height="280" role="img" aria-label="End-to-end pipeline of SPPR and TDLPP">
+  <defs>
+    <marker id="arrow" viewBox="0 0 7 7" refX="7" refY="3.5" markerUnits="userSpaceOnUse"
+            markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="280" fill="#ffffff"/>
+
+  <!-- ===================== card 1 : input ===================== -->
+  <rect x="22" y="80" width="180" height="132" rx="10" fill="#ffffff" stroke="#dbe3ec" stroke-width="1.2"/>
+  <rect x="22" y="80" width="180" height="3.5" rx="1.75" fill="#cbd5e1"/>
+  <text x="112" y="106" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="9.5" letter-spacing="1.1" fill="#8b98a8">INPUT</text>
+  <text x="112" y="130" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#1e293b">HSI cube</text>
+  <text x="112" y="157" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">h × w × m cube</text>
+  <text x="112" y="175" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">global range scaling</text>
+  <text x="112" y="193" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">single precision</text>
+
+  <!-- ===================== card 2 : superpixel prior ===================== -->
+  <rect x="216" y="80" width="180" height="132" rx="10" fill="#ffffff" stroke="#dbe3ec" stroke-width="1.2"/>
+  <rect x="216" y="80" width="180" height="3.5" rx="1.75" fill="#0d9488"/>
+  <text x="306" y="106" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="9.5" letter-spacing="1.1" fill="#0f766e">SPPR</text>
+  <text x="306" y="130" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#1e293b">Superpixel prior</text>
+  <text x="306" y="157" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">PCA → 1st component</text>
+  <text x="306" y="175" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">ERS segmentation</text>
+  <text x="306" y="193" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">pseudo-label map</text>
+
+  <!-- ===================== card 3 : patch purification ===================== -->
+  <rect x="410" y="80" width="180" height="132" rx="10" fill="#ffffff" stroke="#dbe3ec" stroke-width="1.2"/>
+  <rect x="410" y="80" width="180" height="3.5" rx="1.75" fill="#0d9488"/>
+  <text x="500" y="106" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="9.5" letter-spacing="1.1" fill="#0f766e">SPPR</text>
+  <text x="500" y="130" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#1e293b">Patch purification</text>
+  <text x="500" y="157" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">s × s × m patch</text>
+  <text x="500" y="175" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">heterogeneous pixels</text>
+  <text x="500" y="193" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">rebuilt via SoftClip</text>
+
+  <!-- ===================== card 4 : TDLPP ===================== -->
+  <rect x="604" y="80" width="180" height="132" rx="10" fill="#ffffff" stroke="#dbe3ec" stroke-width="1.2"/>
+  <rect x="604" y="80" width="180" height="3.5" rx="1.75" fill="#4f46e5"/>
+  <text x="694" y="106" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="9.5" letter-spacing="1.1" fill="#4338ca">TDLPP</text>
+  <text x="694" y="130" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#1e293b">Tensor projection</text>
+  <text x="694" y="157" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">graphs W and B</text>
+  <text x="694" y="175" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">mode-wise U1 … Un</text>
+  <text x="694" y="193" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">no vectorization</text>
+
+  <!-- ===================== card 5 : classifier ===================== -->
+  <rect x="798" y="80" width="180" height="132" rx="10" fill="#ffffff" stroke="#dbe3ec" stroke-width="1.2"/>
+  <rect x="798" y="80" width="180" height="3.5" rx="1.75" fill="#cbd5e1"/>
+  <text x="888" y="106" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="9.5" letter-spacing="1.1" fill="#8b98a8">EVALUATION</text>
+  <text x="888" y="130" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#1e293b">1-NN classifier</text>
+  <text x="888" y="157" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">center-pixel vector</text>
+  <text x="888" y="175" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">Euclidean, k = 1</text>
+  <text x="888" y="193" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12.5" fill="#64748b">OA / AA / Kappa</text>
+
+  <!-- ===================== forward arrows ===================== -->
+  <line x1="203" y1="146" x2="209" y2="146" stroke="#94a3b8" stroke-width="1.4"/>
+  <polygon points="208.5,142.4 214.5,146 208.5,149.6" fill="#94a3b8"/>
+  <line x1="397" y1="146" x2="403" y2="146" stroke="#94a3b8" stroke-width="1.4"/>
+  <polygon points="402.5,142.4 408.5,146 402.5,149.6" fill="#94a3b8"/>
+  <line x1="591" y1="146" x2="597" y2="146" stroke="#94a3b8" stroke-width="1.4"/>
+  <polygon points="596.5,142.4 602.5,146 596.5,149.6" fill="#94a3b8"/>
+  <line x1="785" y1="146" x2="791" y2="146" stroke="#94a3b8" stroke-width="1.4"/>
+  <polygon points="790.5,142.4 796.5,146 790.5,149.6" fill="#94a3b8"/>
+
+  <!-- ===================== ablation arm : raw patches ===================== -->
+  <path d="M112,212 L112,240 L694,240 L694,219"
+        fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <polygon points="690.4,219.5 694,213 697.6,219.5" fill="#94a3b8"/>
+  <text x="403" y="232" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif"
+        font-size="11.5" fill="#7c8798">raw patches skip SPPR — the Raw_TDLPP arm</text>
+
+  <!-- ===================== footnote ===================== -->
+  <text x="500" y="266" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="#9aa7b6">
+    SPPR purifies the input before feature learning; TDLPP learns the discriminative projection. main.m evaluates both arms on the same split.
+  </text>
+</svg>
