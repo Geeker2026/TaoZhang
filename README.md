@@ -22,48 +22,50 @@ The framework couples two components that act at different stages of the pipelin
 
 ![Framework of TDLPP](docs/figures/fig1_tdlpp_framework.png)
 
-A training patch $\mathcal{X}_i^{c}\in\mathbb{R}^{w\times w\times m}$ of class $c$ is projected with one matrix per mode, $\mathcal{Y}_i^{c}=\mathcal{X}_i^{c}\times_{1}U_1\times_{2}U_2\cdots\times_{n}U_n$ with $U_k\in\mathbb{R}^{d_k\times m_k}$ and $d_k<m_k$, and TDLPP maximizes
+A training patch $`\mathcal{X}_i^{c}\in\mathbb{R}^{w\times w\times m}`$ of class $`c`$ is projected with one matrix per mode, $`\mathcal{Y}_i^{c}=\mathcal{X}_i^{c}\times_{1}U_1\times_{2}U_2\cdots\times_{n}U_n`$ with $`U_k\in\mathbb{R}^{d_k\times m_k}`$ and $`d_k<m_k`$, and TDLPP maximizes
 
-$$
+```math
 \max_{U_1,\ldots,U_n}\;\frac{\sum_{u,v=1}^{C}\lVert\mathcal{M}_u-\mathcal{M}_v\rVert_F^{2}\,B_{uv}}{\sum_{c=1}^{C}\sum_{i,j=1}^{n_c}\lVert\mathcal{Y}_i^{c}-\mathcal{Y}_j^{c}\rVert_F^{2}\,W_{ij}^{c}},
-$$
+```
 
-where $\mathcal{M}_u$ is the mean tensor of class $u$ in the projected space. Both affinity graphs are fully connected heat kernels, so no $K$-nearest-neighbour truncation is involved:
+where $`\mathcal{M}_u`$ is the mean tensor of class $`u`$ in the projected space. Both affinity graphs are fully connected heat kernels, so no $`K`$-nearest-neighbour truncation is involved:
 
-$$
+```math
 W_{ij}^{c}=\exp\left(-\frac{\lVert\mathcal{X}_i^{c}-\mathcal{X}_j^{c}\rVert_F^{2}}{t_1}\right),\qquad B_{uv}=\exp\left(-\frac{\lVert\mathcal{F}_u-\mathcal{F}_v\rVert_F^{2}}{t_2}\right),
-$$
+```
 
-with $\mathcal{F}_u$ the class-mean tensor in the original space. $B_{uv}$ is larger for class pairs whose means are closer, so maximizing the numerator concentrates the effort on the classes that are easiest to confuse. The widths are not tuned per dataset: $t_1$ and $t_2$ default to the mean pairwise distance of the training samples and of the class means.
+with $`\mathcal{F}_u`$ the class-mean tensor in the original space. $`B_{uv}`$ is larger for class pairs whose means are closer, so maximizing the numerator concentrates the effort on the classes that are easiest to confuse. The widths are not tuned per dataset: $`t_1`$ and $`t_2`$ default to the mean pairwise distance of the training samples and of the class means.
 
-Solving alternates over modes. With all other projections fixed, the $U_k$ subproblem is the generalized eigenproblem $S_B^{(k)}\mathbf{u}=\lambda S_W^{(k)}\mathbf{u}$, and $U_k$ stacks the $d_k$ eigenvectors of the largest nonzero eigenvalues. Iteration stops when $|J^{(t)}-J^{(t-1)}|<0.005$ or at $t=50$, with $J=C_W/C_B$. The objective is not jointly convex in the projections, so no global-optimality claim is made; the paper reports average stopping times of 6–19 sweeps over ten splits on the four benchmarks. The first two modes are fixed to 1 and only the spectral dimension is tuned, because the classifier reads the centre pixel of each patch.
+Solving alternates over modes. With all other projections fixed, the $`U_k`$ subproblem is the generalized eigenproblem $`S_B^{(k)}\mathbf{u}=\lambda S_W^{(k)}\mathbf{u}`$, and $`U_k`$ stacks the $`d_k`$ eigenvectors of the largest nonzero eigenvalues. Iteration stops when $`|J^{(t)}-J^{(t-1)}|<0.005`$ or at $`t=50`$, with $`J=C_W/C_B`$. The objective is not jointly convex in the projections, so no global-optimality claim is made; the paper reports average stopping times of 6–19 sweeps over ten splits on the four benchmarks. The first two modes are fixed to 1 and only the spectral dimension is tuned, because the classifier reads the centre pixel of each patch.
 
 ### SPPR
 
 ![Framework of SPPR](docs/figures/fig3_sppr_framework.png)
 
-The pseudo-label map comes from PCA (first component) followed by ERS segmentation with $K=\lfloor hw/A_s\rfloor$, $A_s=800$, $\lambda=0.5$ and $\sigma=5$; no ground truth is used. For a patch centred at $\mathbf{p}_0$ with centre pseudo-label $\tilde{y}_0$:
+The pseudo-label map comes from PCA (first component) followed by ERS segmentation with $`K=\lfloor hw/A_s\rfloor`$, $`A_s=800`$, $`\lambda=0.5`$ and $`\sigma=5`$; no ground truth is used. For a patch centred at $`\mathbf{p}_0`$ with centre pseudo-label $`\tilde{y}_0`$:
 
-**Step 1 — Heterogeneous positions.** Position $\mathbf{p}$ is flagged when its pseudo-label differs from $\tilde{y}_0$; flagged positions are candidates for reconstruction, the rest are kept unchanged.
+**Step 1 — Heterogeneous positions.** Position $`\mathbf{p}`$ is flagged when its pseudo-label differs from $`\tilde{y}_0`$; flagged positions are candidates for reconstruction, the rest are kept unchanged.
 
-**Step 2 — Candidate set.** Every position of the whole scene carrying the pseudo-label $\tilde{y}_0$ is a candidate, minus the patch's own homogeneous positions, which would only duplicate what the patch already has.
+**Step 2 — Candidate set.** Every position of the whole scene carrying the pseudo-label $`\tilde{y}_0`$ is a candidate, minus the patch's own homogeneous positions, which would only duplicate what the patch already has.
 
-**Step 3 — Suitability.** For a flagged position $\mathbf{p}_h$ and a candidate $\mathbf{p}'$, the spectral distance to the centre pixel $d_{\mathrm{spec}}(\mathbf{p}',\mathbf{p}_0)$ and the spatial distance to the flagged position $d_{\mathrm{spa}}(\mathbf{p}',\mathbf{p}_h)$ are combined as
+**Step 3 — Suitability.** For a flagged position $`\mathbf{p}_h`$ and a candidate $`\mathbf{p}'`$, the spectral distance to the centre pixel $`d_{\mathrm{spec}}(\mathbf{p}',\mathbf{p}_0)`$ and the spatial distance to the flagged position $`d_{\mathrm{spa}}(\mathbf{p}',\mathbf{p}_h)`$ are combined as
 
-$$
+```math
 s(\mathbf{p}',\mathbf{p}_h)=\frac{d_{\mathrm{spa}}(\mathbf{p}',\mathbf{p}_h)}{\exp\left[-d_{\mathrm{spec}}(\mathbf{p}',\mathbf{p}_0)\right]},
-$$
+```
 
 so spectral dissimilarity penalizes a candidate multiplicatively and no extra trade-off weight is introduced.
 
 **Step 4 — Assignment and reconstruction.** Flagged positions are visited in a fixed row-wise order; each takes the lowest-cost candidate still unused in this patch, and once the pool is exhausted the remaining positions keep their original spectra. The replacement is a clipped interpolation rather than a hard copy,
 
-$$
-\mathcal{X}_i^{\mathrm{rec}}(\mathbf{p},:)=\mathcal{X}_i(\mathbf{p},:)+\alpha_{i,\mathbf{p}}\left[\mathbf{x}^{*}(\mathbf{p})-\mathcal{X}_i(\mathbf{p},:)\right],\qquad
-\alpha_{i,\mathbf{p}}=\min\left\{1-\rho_i,\ \frac{\lVert\mathcal{X}_i(\mathbf{p},:)-\mathbf{x}_0\rVert_2}{\lVert\mathbf{x}^{*}(\mathbf{p})-\mathcal{X}_i(\mathbf{p},:)\rVert_2+\varepsilon}\right\},
-$$
+```math
+\begin{aligned}
+\mathcal{X}_i^{\mathrm{rec}}(\mathbf{p},:)&=\mathcal{X}_i(\mathbf{p},:)+\alpha_{i,\mathbf{p}}\left[\mathbf{x}^{\ast}(\mathbf{p})-\mathcal{X}_i(\mathbf{p},:)\right],\\[4pt]
+\alpha_{i,\mathbf{p}}&=\min\left\{1-\rho_i,\ \frac{\lVert\mathcal{X}_i(\mathbf{p},:)-\mathbf{x}_0\rVert_2}{\lVert\mathbf{x}^{\ast}(\mathbf{p})-\mathcal{X}_i(\mathbf{p},:)\rVert_2+\varepsilon}\right\},
+\end{aligned}
+```
 
-where $\rho_i$ is the fraction of flagged positions in the patch. The weight is capped at $1-\rho_i$, so the more heterogeneous a patch is, the more conservative its correction, and $\alpha=0$ keeps the original spectrum.
+where $`\rho_i`$ is the fraction of flagged positions in the patch. The weight is capped at $`1-\rho_i`$, so the more heterogeneous a patch is, the more conservative its correction, and $`\alpha=0`$ keeps the original spectrum.
 
 ### Paper to code
 
