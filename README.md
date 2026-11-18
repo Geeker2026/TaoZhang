@@ -15,7 +15,7 @@ Contact: 1281538933@qq.com
 </tr>
 </table>
 
-Minimal MATLAB implementation of **Semantic-purified tensor discriminant manifold learning for hyperspectral image classification** (T. Zhang, L. Zeng, F. Wang, *Pattern Recognition* 184 (2027) 115271).
+MATLAB implementation of **Semantic-purified tensor discriminant manifold learning for hyperspectral image classification** (T. Zhang, L. Zeng, F. Wang, *Pattern Recognition* 184 (2027) 115271).
 
 This package contains only the two proposed components: tensor discriminant locality preserving projection (TDLPP) and superpixel-guided patch purification reconstruction (SPPR). It evaluates raw TDLPP and SPPR + TDLPP on the same training/test split. 
 
