@@ -30,8 +30,6 @@ W_{ij}^{c}=\exp\left(-\frac{\lVert\mathcal{X}_i^{c}-\mathcal{X}_j^{c}\rVert_F^{2
 
 with $`\mathcal{F}_u`$ the class-mean tensor in the original space. $`B_{uv}`$ is larger for class pairs whose means are closer, so maximizing the numerator concentrates the effort on the classes that are easiest to confuse. The widths are not tuned per dataset: $`t_1`$ and $`t_2`$ default to the mean pairwise distance of the training samples and of the class means.
 
-Solving alternates over modes. With all other projections fixed, the $`U_k`$ subproblem is the generalized eigenproblem $`S_B^{(k)}\mathbf{u}=\lambda S_W^{(k)}\mathbf{u}`$, and $`U_k`$ stacks the $`d_k`$ eigenvectors of the largest nonzero eigenvalues. Iteration stops when $`|J^{(t)}-J^{(t-1)}|<0.005`$ or at $`t=50`$, with $`J=C_W/C_B`$. The objective is not jointly convex in the projections, so no global-optimality claim is made; the paper reports average stopping times of 6–19 sweeps over ten splits on the four benchmarks. The first two modes are fixed to 1 and only the spectral dimension is tuned, because the classifier reads the centre pixel of each patch.
-
 ### SPPR
 
 ![Framework of SPPR](docs/figures/fig3_sppr_framework.png)
