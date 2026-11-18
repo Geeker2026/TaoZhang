@@ -2,21 +2,15 @@
 
 Minimal MATLAB implementation of **Semantic-purified tensor discriminant manifold learning for hyperspectral image classification** (T. Zhang, L. Zeng, F. Wang, *Pattern Recognition* 184 (2027) 115271).
 
-This package contains only the two proposed components: tensor discriminant locality preserving projection (TDLPP) and superpixel-guided patch purification reconstruction (SPPR). It evaluates raw TDLPP and SPPR + TDLPP on the same training/test split. SPPR here is the version used in the paper: row-wise greedy candidate selection without reuse inside a patch, followed by adaptive SoftClip interpolation.
+This package contains only the two proposed components: tensor discriminant locality preserving projection (TDLPP) and superpixel-guided patch purification reconstruction (SPPR). It evaluates raw TDLPP and SPPR + TDLPP on the same training/test split. 
 
 **License:** the authors' MATLAB code is MIT, but this package bundles ERS, which is licensed for **non-commercial use only**. The package as a whole is therefore limited to non-commercial use. See [License](#license) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) before reuse.
 
 ## Method
 
-The framework couples two components that act at different stages of the pipeline. **SPPR purifies the input representation** before feature learning; **TDLPP learns a discriminative tensor projection** on top of it. The two are complementary, which is why `main` always runs both arms — raw patches and purified patches — on the same split and reports the paired gain.
+The framework couples two components that act at different stages of the pipeline. **SPPR purifies the input representation** before feature learning; **TDLPP learns a discriminative tensor projection** on top of it. The two are complementary, which is why `main` always runs both arms — raw patches and purified patches — on the same split and reports the paired gain. The two components are decoupled for standalone usage. For dimensionality reduction tasks, TDLPP alone is sufficient for feature extraction.
 
 ![End-to-end pipeline: superpixel prior, SPPR purification, TDLPP projection, 1-NN](docs/figures/pipeline.svg)
-
-### Main contributions
-
-1. **Class supervision inside a multilinear projection (TDLPP).** The discriminative locality-preserving criterion of DLPP is extended from vector space to tensor space. TDLPP minimizes weighted within-class local scatter while maximizing weighted separation between class-mean tensors, with one projection matrix per mode. Unlike TLPP variants (MTLPP, WMTLPP, DS²-TLPP), which refine graph construction but keep a TLPP-style locality-preserving objective, TDLPP changes the objective itself — and does so without vectorizing the tensor patches.
-2. **Superpixel-guided patch purification (SPPR).** A fixed-size patch crosses object boundaries and mixed regions, so its pixels can contradict the centre pixel. SPPR takes a label-free superpixel map as a homogeneity prior and rebuilds the inconsistent positions of each patch from same-superpixel candidates, suppressing heterogeneous interference before feature learning. It acts on the input, not on the learner, so the paper applies it to TLPP, MTLPP, WMTLPP, DS²-TLPP and TDLPP alike.
-3. **Patch-purity diagnostics (CLCR).** The Center Label Consistency Ratio — the fraction of a patch's pixels that share the centre label — makes the effect of purification measurable instead of merely inferred from accuracy; the paper uses it to show that SPPR raises patch purity on average. It is an evaluation metric that uses ground truth, never an input to the method. The diagnostics are reported in Section 3.2 (Figs. 7–8) and are not part of this release, see [Scope](#scope).
 
 ### TDLPP
 
